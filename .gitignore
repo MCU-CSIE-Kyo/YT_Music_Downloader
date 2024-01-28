@@ -1,0 +1,4 @@
+*.pyc
+
+# For develop environment
+OddAndEnds/environment/
