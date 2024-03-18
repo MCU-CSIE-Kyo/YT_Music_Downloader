@@ -6,7 +6,7 @@ from selenium import webdriver
 
 class Web:
     # The web that can let us to download the music
-    download_web = "https://www.y2meta.com/zh-tw/youtube-to-mp3/eqtGDY0llkI"
+    download_web = "https://www.y2meta.com/zh-tw/youtube-to-mp3/"
     user_name = os.getlogin()
 
     def __init__(self, file_name: str, music_url: str):
@@ -16,7 +16,9 @@ class Web:
             file_name (str): Tha music file name
             music_url (str): Which music is user want to download
         """
-        self.driver = webdriver.Chrome()
+        setting = webdriver.ChromeOptions()
+        setting.add_extension(".\Code\\43130.crx")
+        self.driver = webdriver.Chrome(options=setting)
         self.music_url = music_url
         self.file_name = file_name
 
@@ -31,6 +33,9 @@ class Web:
         time.sleep(5)
 
     def get_download_link(self):
+        start_button = self.driver.find_element("xpath", "//*[@id=\"btn-submit\"]/span[1]")
+        start_button.click()
+        time.sleep(5)
         get_link_button = self.driver.find_element(
             "xpath", "//*[@id=\"process_mp3\"]")
         get_link_button.click()
@@ -63,5 +68,5 @@ class Web:
         self.rename_filename()
 
 
-Downloader = Web("Example", "https://www.youtube.com/watch?v=tZKFGmks6hA")
+Downloader = Web("陳奕迅-重口味", "https://www.youtube.com/watch?v=eqtGDY0llkI&ab_channel=universalmusichk")
 Downloader.main()
